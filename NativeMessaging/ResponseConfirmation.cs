@@ -1,28 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace NativeMessaging
-{
-    internal class ResponseConfirmation
-    {
+namespace NativeMessaging {
+    internal class ResponseConfirmation {
         [JsonProperty("message")]
         public string Message { get; set; }
         [JsonProperty("data")]
         public JObject Data { get; set; }
 
-        public ResponseConfirmation(JObject data)
-        {
+        public ResponseConfirmation(JObject data) {
             Data = data;
             Message = "Confirmation of received data";
         }
 
-        public JObject GetJObject()
-        {
+        public JObject GetJObject() {
             return JsonConvert.DeserializeObject<JObject>(JsonConvert.SerializeObject(this));
         }
     }
