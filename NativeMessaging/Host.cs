@@ -90,6 +90,7 @@ namespace NativeMessaging {
         /// <param name="data">A <see cref="JObject"/> containing the data received.</param>
         protected abstract void ProcessReceivedMessage(JObject data);
 
+        #region Chromium Native Messaging Manifest
         /// <summary>
         /// Generates the manifest and saves it to the correct location.
         /// </summary>
@@ -108,6 +109,16 @@ namespace NativeMessaging {
                 Log.LogMessage("Manifest Generated");
             }
         }
+
+        /// <summary>
+        /// Removes the manifest from application folder
+        /// </summary>
+        public void RemoveManifest() {
+            if (File.Exists(ManifestPath)) {
+                File.Delete(ManifestPath);
+            }
+        }
+        #endregion
 
         #region Browser Registration
         /// <summary>
