@@ -12,8 +12,14 @@ using System.Threading;
 
 namespace NativeMessaging
 {
+    /// <summary>
+    /// Abstract class that should be extended to communicate with Chrome
+    /// </summary>
     public abstract class Host
     {
+        /// <summary>
+        /// Name of the Native Messaging Host
+        /// </summary>
         public abstract string Hostname { get; }
 
         private readonly bool SendConfirmationReceipt;
@@ -24,8 +30,7 @@ namespace NativeMessaging
         /// <summary>
         /// Creates the Host Object
         /// </summary>
-        /// <param name="hostname"></param>
-        /// <param name="sendConfirmationReceipt"></param>
+        /// <param name="sendConfirmationReceipt"><see langword="true" /> for the host to automatically send message confirmation receipt.</param>
         public Host(bool sendConfirmationReceipt = true)
         {
             SendConfirmationReceipt = sendConfirmationReceipt;
@@ -65,7 +70,7 @@ namespace NativeMessaging
         /// <summary>
         /// Sends a message to Chrome, note that the message might not be able to reach Chrome if the stdIn / stdOut aren't properly configured (i.e. Process needs to be started by Chrome)
         /// </summary>
-        /// <param name="data"></param>
+        /// <param name="data">A <see cref="JObject"/> containing the data to be sent.</param>
         public void SendMessage(JObject data)
         {
             Utils.LogMessage("Sending Message:" + JsonConvert.SerializeObject(data));
@@ -79,14 +84,17 @@ namespace NativeMessaging
             stdout.Flush();
         }
 
-
+        /// <summary>
+        /// Override this method in your extended <see cref="Host"/> to process messages received from Chrome.
+        /// </summary>
+        /// <param name="data">A <see cref="JObject"/> containing the data received.</param>
         protected abstract void ProcessReceivedMessage(JObject data);
 
         /// <summary>
-        /// Generates the manifest & saves it to the correct location.
+        /// Generates the manifest and saves it to the correct location.
         /// </summary>
-        /// <param name="description"></param>
-        /// <param name="allowedOrigins"></param>
+        /// <param name="description">Short application description to be included in the manifest.</param>
+        /// <param name="allowedOrigins">List of extensions that should have access to the native messaging host.<br />Wildcards such as <code>chrome-extension://*/*</code> are not allowed.</param>
         public void GenerateManifest(string description, string[] allowedOrigins)
         {
             Utils.LogMessage("Generating Manifest");
@@ -111,6 +119,10 @@ namespace NativeMessaging
             Utils.LogMessage("Registered:" + Hostname);
         }
 
+        /// <summary>
+        /// Checks if the host is registered with Chrome
+        /// </summary>
+        /// <returns><see langword="true"/> if the required information is present in the registry.</returns>
         public bool IsRegisteredWithChrome()
         {
             var regHostnameKeyLocation = RegKeyBaseLocation + Hostname;
@@ -120,7 +132,6 @@ namespace NativeMessaging
 
             return false;
         }
-
 
         /// <summary>
         /// De-register the application to open with Chrome.
@@ -135,6 +146,4 @@ namespace NativeMessaging
             Utils.LogMessage("Unregistered:" + Hostname);
         }
     }
-
-
 }
