@@ -75,3 +75,8 @@ class Program
         }
     }
 ```
+
+## Troubleshooting
+If your're having trouble connecting from Chrome try launching chrome with ```--enable-logging``` flag as detailed in [Debugging native messaging](https://developer.chrome.com/apps/nativeMessaging#native-messaging-debugging).
+
+It also recommeneded to try compiling in Release mode if you're encountering issues.
