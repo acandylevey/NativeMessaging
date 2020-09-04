@@ -39,7 +39,9 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ChromiumBrowser.Static.cs" />
+    <Compile Include="ChromiumBrowser.Static.cs">
+      <DependentUpon>ChromiumBrowser.cs</DependentUpon>
+    </Compile>
     <Compile Include="Exceptions.cs" />
     <Compile Include="Host.cs" />
     <Compile Include="ChromiumBrowser.cs" />

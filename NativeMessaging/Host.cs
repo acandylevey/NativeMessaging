@@ -53,14 +53,14 @@ namespace NativeMessaging {
         private JObject Read() {
             Log.LogMessage("Waiting for Data");
 
-            var stdin = Console.OpenStandardInput();
+            Stream stdin = Console.OpenStandardInput();
 
-            var lengthBytes = new byte[4];
+            byte[] lengthBytes = new byte[4];
             stdin.Read(lengthBytes, 0, 4);
 
-            var buffer = new char[BitConverter.ToInt32(lengthBytes, 0)];
+            char[] buffer = new char[BitConverter.ToInt32(lengthBytes, 0)];
 
-            using (var reader = new StreamReader(stdin))
+            using (StreamReader reader = new StreamReader(stdin))
                 while (reader.Peek() >= 0)
                     reader.Read(buffer, 0, buffer.Length);
 
@@ -74,8 +74,8 @@ namespace NativeMessaging {
         public void SendMessage(JObject data) {
             Log.LogMessage("Sending Message:" + JsonConvert.SerializeObject(data));
 
-            var bytes = System.Text.Encoding.UTF8.GetBytes(data.ToString(Formatting.None));
-            var stdout = Console.OpenStandardOutput();
+            byte[] bytes = System.Text.Encoding.UTF8.GetBytes(data.ToString(Formatting.None));
+            Stream stdout = Console.OpenStandardOutput();
             stdout.WriteByte((byte)((bytes.Length >> 0) & 0xFF));
             stdout.WriteByte((byte)((bytes.Length >> 8) & 0xFF));
             stdout.WriteByte((byte)((bytes.Length >> 16) & 0xFF));
@@ -103,7 +103,7 @@ namespace NativeMessaging {
             } else {
                 Log.LogMessage("Generating Manifest");
 
-                var manifest = JsonConvert.SerializeObject(new Manifest(Hostname, description, Utils.AssemblyExecuteablePath(), allowedOrigins));
+                string manifest = JsonConvert.SerializeObject(new Manifest(Hostname, description, Utils.AssemblyExecuteablePath(), allowedOrigins));
                 File.WriteAllText(ManifestPath, manifest);
 
                 Log.LogMessage("Manifest Generated");
