@@ -8,9 +8,9 @@
     <owners>anewtonlevey</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <license type="expression">MIT</license>
-    <description>C# Chome Native Messaging Library</description>
+    <description>C# Chomium (Chrome/Edge) Native Messaging Library</description>
     <copyright>$copyright$</copyright>
-    <tags>Chrome Extension Chromium Native Messaging</tags>
+    <tags>Google Chrome Extension Chromium Native Messaging Microsoft Edge</tags>
     <repository type="git" url="https://github.com/anewtonlevey/NativeMessaging" />
   </metadata>
 </package>
