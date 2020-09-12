@@ -7,8 +7,8 @@ namespace NativeMessagingTest
     {
         static Host Host;
 
-        static string[] AllowedOrigins = new string[] { "chrome-extension://knldjmfmopnpolahpmmgbagdohdnhkik/" };
-        static string Description = "Alexander Newton Levey Native Messaging Example Host";
+        readonly static string[] AllowedOrigins = new string[] { "chrome-extension://knldjmfmopnpolahpmmgbagdohdnhkik/" };
+        readonly static string Description = "Alexander Newton Levey Native Messaging Example Host";
 
         static void Main(string[] args)
         {
