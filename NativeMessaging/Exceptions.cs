@@ -10,12 +10,12 @@ namespace NativeMessaging
     /// Exception raised when trying to interact with chrome while the extension is not registered in the Windows Registry
     /// </summary>
     [Serializable]
-    public class NotRegisteredWithChromeException : Exception
+    public class NotRegisteredWithBrowserException : Exception
     {
-        internal NotRegisteredWithChromeException() { }
-        internal NotRegisteredWithChromeException(string message) : base(message) { }
-        internal NotRegisteredWithChromeException(string message, Exception inner) : base(message, inner) { }
-        internal NotRegisteredWithChromeException(
+        internal NotRegisteredWithBrowserException() { }
+        internal NotRegisteredWithBrowserException(string message) : base(message) { }
+        internal NotRegisteredWithBrowserException(string message, Exception inner) : base(message, inner) { }
+        internal NotRegisteredWithBrowserException(
           System.Runtime.Serialization.SerializationInfo info,
           System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
     }
