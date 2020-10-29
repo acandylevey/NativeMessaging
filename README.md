@@ -63,6 +63,9 @@ class Program
         static void Main(string[] args)
         {
             Host = new MyHost();
+	    Host.SupportedBrowsers.Add(ChromiumBrowser.GoogleChrome);
+	    Host.SupportedBrowsers.Add(ChromiumBrowser.MicrosoftEdge);
+
             if (args.Contains("--register"))
             {
                 Host.GenerateManifest(Description, AllowedOrigins);
