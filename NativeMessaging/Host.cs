@@ -67,7 +67,7 @@ namespace NativeMessaging
             char[] buffer = new char[BitConverter.ToInt32(lengthBytes, 0)];
 
             using (StreamReader reader = new StreamReader(stdin))
-                while (reader.Peek() >= 0)
+                if (reader.Peek() >= 0)
                     reader.Read(buffer, 0, buffer.Length);
 
             return JsonConvert.DeserializeObject<JObject>(new string(buffer));
