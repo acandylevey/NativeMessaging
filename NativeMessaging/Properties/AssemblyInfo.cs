@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Chromium Native Messaging Host")]
 [assembly: AssemblyDescription("C# Chome Native Messaging Library")]
 [assembly: AssemblyProduct("Chromium Native Messaging Host")]
-[assembly: AssemblyCopyright("Copyright © Alexander Newton Levey 2020")]
+[assembly: AssemblyCopyright("Copyright © Alexander Candy-Levey 2021")]
 
 [assembly: ComVisible(false)]
 
@@ -13,5 +13,5 @@ using System.Runtime.InteropServices;
 
 [assembly: AssemblyVersion("1.1.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
-[assembly: AssemblyInformationalVersion("1.0.2")]
+[assembly: AssemblyInformationalVersion("2.0.0")]
 [assembly: NeutralResourcesLanguage("en-AU")]
