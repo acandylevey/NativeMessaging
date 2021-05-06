@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Chromium Native Messaging Host Test Project")]
 [assembly: AssemblyDescription("C# Chome Native Messaging Library")]
 [assembly: AssemblyProduct("Chromium Native Messaging Host")]
-[assembly: AssemblyCopyright("Copyright © Alex Newton Levey 2017")]
+[assembly: AssemblyCopyright("Copyright © Alexander Candy-Levey 2021")]
 
 [assembly: ComVisible(false)]
 

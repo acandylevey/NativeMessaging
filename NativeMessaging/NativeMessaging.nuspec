@@ -4,13 +4,13 @@
     <id>$id$</id>
     <version>$version$</version>
     <title>$title$</title>
-    <authors>Alex Newton Levey</authors>
+    <authors>Alexander Candy-Levey</authors>
     <owners>anewtonlevey</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <license type="expression">MIT</license>
     <description>C# Chomium (Chrome/Edge) Native Messaging Library</description>
     <copyright>$copyright$</copyright>
     <tags>Google Chrome Extension Chromium Native Messaging Microsoft Edge</tags>
-    <repository type="git" url="https://github.com/anewtonlevey/NativeMessaging" />
+    <repository type="git" url="https://github.com/acandylevey/NativeMessaging" />
   </metadata>
 </package>
