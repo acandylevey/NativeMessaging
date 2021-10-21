@@ -20,11 +20,7 @@
         /// <summary>
         /// Activate the logging if set to <see langword="true"/>
         /// </summary>
-        public static bool Active
-        {
-            get;
-            set;
-        } = false;
+        public static bool Active { get; set; } = false;
 
         internal static void LogMessage(string msg)
         {
@@ -41,7 +37,7 @@
             }
             catch (IOException)
             {
-                Console.WriteLine("Could Not Log To File");
+                Console.WriteLine("Could not log to file");
                 //Supress Exception
             }
         }

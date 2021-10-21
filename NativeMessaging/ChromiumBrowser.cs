@@ -12,11 +12,7 @@ namespace NativeMessaging
         /// <summary>
         /// The name of the browser application.
         /// </summary>
-        public string BrowserName
-        {
-            get;
-            private set;
-        }
+        public string BrowserName { get; private set; }
 
         /// <summary>
         /// Creates a new <see cref="ChromiumBrowser"/> object.
@@ -27,7 +23,7 @@ namespace NativeMessaging
         {
             BrowserName = browserName;
 
-            regHostnameKeyLocation 
+            regHostnameKeyLocation
                 = RegKeyBaseLocation + "\\NativeMessagingHosts\\";
         }
 
@@ -43,10 +39,10 @@ namespace NativeMessaging
             {
                 string targetKeyPath = regHostnameKeyLocation + Hostname;
 
+                RegistryKey? regKey 
+                    = Registry.CurrentUser.OpenSubKey(targetKeyPath, true);
 
-                RegistryKey? regKey = Registry.CurrentUser.OpenSubKey(targetKeyPath, true);
-
-                if (regKey != null 
+                if (regKey != null
                     && regKey?.GetValue("")?.ToString() == ManifestPath)
                 {
                     return true;
@@ -73,20 +69,20 @@ namespace NativeMessaging
             {
                 string targetKeyPath = regHostnameKeyLocation + Hostname;
 
-                RegistryKey? regKey 
+                RegistryKey? regKey
                     = Registry.CurrentUser.OpenSubKey(targetKeyPath, true);
 
                 if (regKey == null)
                 {
                     regKey = Registry.CurrentUser.CreateSubKey(targetKeyPath);
                 }
-                    
+
                 regKey.SetValue("", ManifestPath, RegistryValueKind.String);
 
                 regKey.Close();
 
                 Log.LogMessage(
-                    "Registered host (" + Hostname + ") with browser " 
+                    "Registered host (" + Hostname + ") with browser "
                     + BrowserName);
             }
             else
@@ -106,17 +102,18 @@ namespace NativeMessaging
             {
                 string targetKeyPath = regHostnameKeyLocation + Hostname;
 
-                RegistryKey? regKey = Registry.CurrentUser.OpenSubKey(targetKeyPath, true);
+                RegistryKey? regKey 
+                    = Registry.CurrentUser.OpenSubKey(targetKeyPath, true);
 
                 if (regKey != null)
                 {
                     regKey.DeleteSubKey("", true);
                 }
-                    
+
                 regKey?.Close();
 
                 Log.LogMessage(
-                    "Unregistered host (" + Hostname + ") with browser " 
+                    "Unregistered host (" + Hostname + ") with browser "
                     + BrowserName);
             }
             else
