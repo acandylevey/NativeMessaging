@@ -32,7 +32,7 @@ namespace NativeMessaging
 
         static public string AssemblyExecuteablePath()
         {
-            string? codeBase = Assembly.GetEntryAssembly()?.Location;
+            string? codeBase = Environment.ProcessPath;
 
             if (codeBase == null)
             {

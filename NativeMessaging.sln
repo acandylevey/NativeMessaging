@@ -5,7 +5,7 @@ VisualStudioVersion = 17.0.31815.197
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NativeMessaging", "NativeMessaging\NativeMessaging.csproj", "{7994DFD1-0F49-4335-B107-BBA9B995C7B9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NativeMessagingTest", "NativeMessagingTest\NativeMessagingTest.csproj", "{136C41C1-8893-47C0-B93A-CCBA94436014}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NativeMessagingTest", "NativeMessagingTest\NativeMessagingTest.csproj", "{136C41C1-8893-47C0-B93A-CCBA94436014}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
