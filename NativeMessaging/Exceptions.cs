@@ -6,11 +6,21 @@
     [Serializable]
     public class NotRegisteredWithBrowserException : Exception
     {
-        internal NotRegisteredWithBrowserException() { }
-        internal NotRegisteredWithBrowserException(string message) : base(message) { }
-        internal NotRegisteredWithBrowserException(string message, Exception inner) : base(message, inner) { }
+        internal NotRegisteredWithBrowserException() 
+        { }
+
+        internal NotRegisteredWithBrowserException(
+            string message) : base(message) 
+        { }
+        
+        internal NotRegisteredWithBrowserException(
+            string message, Exception inner) : base(message, inner) 
+        { }
+
         internal NotRegisteredWithBrowserException(
           System.Runtime.Serialization.SerializationInfo info,
-          System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
+          System.Runtime.Serialization.StreamingContext context) 
+            : base(info, context) 
+        { }
     }
 }

@@ -26,7 +26,9 @@ namespace NativeMessaging
         public ChromiumBrowser(string browserName, string RegKeyBaseLocation)
         {
             BrowserName = browserName;
-            regHostnameKeyLocation = RegKeyBaseLocation + "\\NativeMessagingHosts\\";
+
+            regHostnameKeyLocation 
+                = RegKeyBaseLocation + "\\NativeMessagingHosts\\";
         }
 
         /// <summary>
@@ -37,12 +39,25 @@ namespace NativeMessaging
         /// <returns><see langword="true"/> if the required information is present in the registry.</returns>
         public bool IsRegistered(string Hostname, string ManifestPath)
         {
-            string targetKeyPath = regHostnameKeyLocation + Hostname;
+            if (OperatingSystem.IsWindows())
+            {
+                string targetKeyPath = regHostnameKeyLocation + Hostname;
 
-            RegistryKey regKey = Registry.CurrentUser.OpenSubKey(targetKeyPath, true);
 
-            if (regKey != null && regKey.GetValue("").ToString() == ManifestPath)
-                return true;
+                RegistryKey? regKey = Registry.CurrentUser.OpenSubKey(targetKeyPath, true);
+
+                if (regKey != null 
+                    && regKey?.GetValue("")?.ToString() == ManifestPath)
+                {
+                    return true;
+                }
+            }
+            else
+            {
+                throw new NotImplementedException(
+                    "Registration verification not implemented on this " +
+                    "platform.");
+            }
 
             return false;
         }
@@ -54,18 +69,31 @@ namespace NativeMessaging
         /// <param name="ManifestPath">Path to the Native Messaging Host manifest file</param>
         public void Register(string Hostname, string ManifestPath)
         {
-            string targetKeyPath = regHostnameKeyLocation + Hostname;
+            if (OperatingSystem.IsWindows())
+            {
+                string targetKeyPath = regHostnameKeyLocation + Hostname;
 
-            RegistryKey regKey = Registry.CurrentUser.OpenSubKey(targetKeyPath, true);
+                RegistryKey? regKey 
+                    = Registry.CurrentUser.OpenSubKey(targetKeyPath, true);
 
-            if (regKey == null)
-                regKey = Registry.CurrentUser.CreateSubKey(targetKeyPath);
+                if (regKey == null)
+                {
+                    regKey = Registry.CurrentUser.CreateSubKey(targetKeyPath);
+                }
+                    
+                regKey.SetValue("", ManifestPath, RegistryValueKind.String);
 
-            regKey.SetValue("", ManifestPath, RegistryValueKind.String);
+                regKey.Close();
 
-            regKey.Close();
-
-            Log.LogMessage("Registered host (" + Hostname + ") with browser " + BrowserName);
+                Log.LogMessage(
+                    "Registered host (" + Hostname + ") with browser " 
+                    + BrowserName);
+            }
+            else
+            {
+                throw new NotImplementedException(
+                    "Registration not implemented on this platform.");
+            }
         }
 
         /// <summary>
@@ -74,14 +102,28 @@ namespace NativeMessaging
         /// <param name="Hostname">The hostname for the Native Messaging Host application</param>
         public void Unregister(string Hostname)
         {
-            string targetKeyPath = regHostnameKeyLocation + Hostname;
+            if (OperatingSystem.IsWindows())
+            {
+                string targetKeyPath = regHostnameKeyLocation + Hostname;
 
-            RegistryKey regKey = Registry.CurrentUser.OpenSubKey(targetKeyPath, true);
-            if (regKey != null)
-                regKey.DeleteSubKey("", true);
-            regKey?.Close();
+                RegistryKey? regKey = Registry.CurrentUser.OpenSubKey(targetKeyPath, true);
 
-            Log.LogMessage("Unregistered host (" + Hostname + ") with browser " + BrowserName);
+                if (regKey != null)
+                {
+                    regKey.DeleteSubKey("", true);
+                }
+                    
+                regKey?.Close();
+
+                Log.LogMessage(
+                    "Unregistered host (" + Hostname + ") with browser " 
+                    + BrowserName);
+            }
+            else
+            {
+                throw new NotImplementedException(
+                   "Registration removal not implemented on this platform.");
+            }
         }
 
         /// <inheritdoc />

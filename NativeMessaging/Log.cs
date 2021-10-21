@@ -12,7 +12,9 @@
         {
             get
             {
-                return Path.Combine(Utils.AssemblyLoadDirectory(), "native-messaging.log");
+                return Path.Combine(
+                    Utils.AssemblyLoadDirectory() ?? "", 
+                    "native-messaging.log");
             }
         }
         /// <summary>
@@ -27,11 +29,15 @@
         internal static void LogMessage(string msg)
         {
             if (!Active)
+            {
                 return;
+            }
 
             try
             {
-                File.AppendAllText(MessageLogLocation, msg + Environment.NewLine);
+                File.AppendAllText(
+                    MessageLogLocation, 
+                    msg + Environment.NewLine);
             }
             catch (IOException)
             {

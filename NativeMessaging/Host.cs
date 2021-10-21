@@ -30,7 +30,11 @@ namespace NativeMessaging
             SupportedBrowsers = new List<ChromiumBrowser>(2);
 
             SendConfirmationReceipt = sendConfirmationReceipt;
-            ManifestPath = Path.Combine(Utils.AssemblyLoadDirectory(), Hostname + "-manifest.json");
+
+            ManifestPath 
+                = Path.Combine(
+                    Utils.AssemblyLoadDirectory() ?? "", 
+                    Hostname + "-manifest.json");
         }
 
         /// <summary>
@@ -39,20 +43,27 @@ namespace NativeMessaging
         public void Listen()
         {
             if (!IsRegistered())
+            {
                 throw new NotRegisteredWithBrowserException(Hostname);
+            }
+                
+            JObject? data;
 
-            JObject data;
             while ((data = Read()) != null)
             {
-                Log.LogMessage("Data Received:" + JsonConvert.SerializeObject(data));
+                Log.LogMessage(
+                    "Data Received:" + JsonConvert.SerializeObject(data));
 
                 if (SendConfirmationReceipt)
-                    SendMessage(new ResponseConfirmation(data).GetJObject());
+                {
+                    SendMessage(new ResponseConfirmation(data).GetJObject()!);
+                }
+
                 ProcessReceivedMessage(data);
             }
         }
 
-        private JObject Read()
+        private JObject? Read()
         {
             Log.LogMessage("Waiting for Data");
 
@@ -65,7 +76,9 @@ namespace NativeMessaging
 
             using (StreamReader reader = new StreamReader(stdin))
                 if (reader.Peek() >= 0)
+                {
                     reader.Read(buffer, 0, buffer.Length);
+                } 
 
             return JsonConvert.DeserializeObject<JObject>(new string(buffer));
         }

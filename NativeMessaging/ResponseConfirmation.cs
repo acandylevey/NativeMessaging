@@ -17,7 +17,7 @@ namespace NativeMessaging
             Message = "Confirmation of received data";
         }
 
-        public JObject GetJObject()
+        public JObject? GetJObject()
         {
             return JsonConvert.DeserializeObject<JObject>(
                 JsonConvert.SerializeObject(this));

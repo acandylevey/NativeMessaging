@@ -9,13 +9,19 @@ namespace NativeMessaging
             get
             {
                 return Path.Combine(
-                    AssemblyLoadDirectory(), "native-messaging.log");
+                    AssemblyLoadDirectory() ?? "", "native-messaging.log");
             }
         }
 
-        static public string AssemblyLoadDirectory()
+        static public string? AssemblyLoadDirectory()
         {
-            string codeBase = Assembly.GetEntryAssembly().Location;
+            string? codeBase = Assembly.GetEntryAssembly()?.Location;
+
+            if (codeBase == null)
+            {
+                throw new InvalidOperationException("Invalid assembly directory.");
+            }
+
             UriBuilder uri = new UriBuilder(codeBase);
             string path = Uri.UnescapeDataString(uri.Path);
 
@@ -24,7 +30,13 @@ namespace NativeMessaging
 
         static public string AssemblyExecuteablePath()
         {
-            string codeBase = Assembly.GetEntryAssembly().Location;
+            string? codeBase = Assembly.GetEntryAssembly()?.Location;
+
+            if (codeBase == null)
+            {
+                throw new InvalidOperationException("Invalid executable path.");
+            }
+
             UriBuilder uri = new UriBuilder(codeBase);
 
             return Uri.UnescapeDataString(uri.Path);
