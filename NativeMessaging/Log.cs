@@ -13,7 +13,7 @@
             get
             {
                 return Path.Combine(
-                    Utils.AssemblyLoadDirectory() ?? "", 
+                    Utils.AssemblyLoadDirectory(), 
                     "native-messaging.log");
             }
         }

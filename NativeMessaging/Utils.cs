@@ -9,12 +9,12 @@ namespace NativeMessaging
             get
             {
                 return Path.Combine(
-                    AssemblyLoadDirectory() ?? "", 
+                    AssemblyLoadDirectory(), 
                     "native-messaging.log");
             }
         }
 
-        static public string? AssemblyLoadDirectory()
+        static public string AssemblyLoadDirectory()
         {
             string? codeBase = Assembly.GetEntryAssembly()?.Location;
 
@@ -27,7 +27,9 @@ namespace NativeMessaging
             UriBuilder uri = new UriBuilder(codeBase);
             string path = Uri.UnescapeDataString(uri.Path);
 
-            return Path.GetDirectoryName(path);
+            // Ensuring the return string is never null, since
+            // GetDirectoryName will return null if in the root directory
+            return Path.GetDirectoryName(path) ?? "";
         }
 
         static public string AssemblyExecuteablePath()
