@@ -18,7 +18,7 @@ namespace NativeMessaging
         /// Creates a new <see cref="ChromiumBrowser"/> object.
         /// </summary>
         /// <param name="browserName">The name of the browser application.</param>
-        /// <param name="RegKeyBaseLocation">Base location for the browser settigns in the Windows Registry.</param>
+        /// <param name="RegKeyBaseLocation">Base location for the browser settings in the Windows Registry.</param>
         public ChromiumBrowser(string browserName, string RegKeyBaseLocation)
         {
             BrowserName = browserName;
