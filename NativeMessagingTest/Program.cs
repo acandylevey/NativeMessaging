@@ -1,5 +1,4 @@
-using NativeMessaging;
-using System.Linq;
+﻿using NativeMessaging;
 
 namespace NativeMessagingTest
 {

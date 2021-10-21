@@ -19,7 +19,11 @@ namespace NativeMessaging
         [JsonProperty("allowed_origins")]
         public string[] AllowedOrigins { get; set; }
 
-        public Manifest(string hostname, string description, string executeablePath, string[] allowedOrigins)
+        public Manifest(
+            string hostname,
+            string description,
+            string executeablePath,
+            string[] allowedOrigins)
         {
             Name = hostname;
             Description = description;

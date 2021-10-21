@@ -1,7 +1,4 @@
-﻿using System;
-using System.IO;
-
-namespace NativeMessaging
+﻿namespace NativeMessaging
 {
     /// <summary>
     /// Controls the logging behavior of the application

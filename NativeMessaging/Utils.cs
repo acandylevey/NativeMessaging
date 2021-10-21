@@ -1,6 +1,4 @@
-﻿using System;
-using System.IO;
-using System.Reflection;
+﻿using System.Reflection;
 
 namespace NativeMessaging
 {
@@ -10,22 +8,25 @@ namespace NativeMessaging
         {
             get
             {
-                return Path.Combine(AssemblyLoadDirectory(), "native-messaging.log");
+                return Path.Combine(
+                    AssemblyLoadDirectory(), "native-messaging.log");
             }
         }
 
         static public string AssemblyLoadDirectory()
         {
-            string codeBase = Assembly.GetEntryAssembly().CodeBase;
+            string codeBase = Assembly.GetEntryAssembly().Location;
             UriBuilder uri = new UriBuilder(codeBase);
             string path = Uri.UnescapeDataString(uri.Path);
+
             return Path.GetDirectoryName(path);
         }
 
         static public string AssemblyExecuteablePath()
         {
-            string codeBase = Assembly.GetEntryAssembly().CodeBase;
+            string codeBase = Assembly.GetEntryAssembly().Location;
             UriBuilder uri = new UriBuilder(codeBase);
+
             return Uri.UnescapeDataString(uri.Path);
         }
 

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace NativeMessaging
+﻿namespace NativeMessaging
 {
     /// <summary>
     /// Exception raised when trying to interact with chrome while the extension is not registered in the Windows Registry
