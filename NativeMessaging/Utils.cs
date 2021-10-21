@@ -9,7 +9,8 @@ namespace NativeMessaging
             get
             {
                 return Path.Combine(
-                    AssemblyLoadDirectory() ?? "", "native-messaging.log");
+                    AssemblyLoadDirectory() ?? "", 
+                    "native-messaging.log");
             }
         }
 
@@ -19,7 +20,8 @@ namespace NativeMessaging
 
             if (codeBase == null)
             {
-                throw new InvalidOperationException("Invalid assembly directory.");
+                throw new InvalidOperationException(
+                    "Invalid assembly directory.");
             }
 
             UriBuilder uri = new UriBuilder(codeBase);
@@ -34,7 +36,8 @@ namespace NativeMessaging
 
             if (codeBase == null)
             {
-                throw new InvalidOperationException("Invalid executable path.");
+                throw new InvalidOperationException(
+                    "Invalid executable path.");
             }
 
             UriBuilder uri = new UriBuilder(codeBase);
