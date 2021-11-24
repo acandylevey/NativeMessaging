@@ -7,6 +7,7 @@ namespace NativeMessaging
     {
         [JsonProperty("message")]
         public string Message { get; set; }
+
         [JsonProperty("data")]
         public JObject Data { get; set; }
 
@@ -16,9 +17,10 @@ namespace NativeMessaging
             Message = "Confirmation of received data";
         }
 
-        public JObject GetJObject()
+        public JObject? GetJObject()
         {
-            return JsonConvert.DeserializeObject<JObject>(JsonConvert.SerializeObject(this));
+            return JsonConvert.DeserializeObject<JObject>(
+                JsonConvert.SerializeObject(this));
         }
     }
 }

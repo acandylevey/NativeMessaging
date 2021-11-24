@@ -1,7 +1,4 @@
-﻿using System;
-using System.IO;
-
-namespace NativeMessaging
+﻿namespace NativeMessaging
 {
     /// <summary>
     /// Controls the logging behavior of the application
@@ -15,30 +12,32 @@ namespace NativeMessaging
         {
             get
             {
-                return Path.Combine(Utils.AssemblyLoadDirectory(), "native-messaging.log");
+                return Path.Combine(
+                    Utils.AssemblyLoadDirectory(), 
+                    "native-messaging.log");
             }
         }
         /// <summary>
         /// Activate the logging if set to <see langword="true"/>
         /// </summary>
-        public static bool Active
-        {
-            get;
-            set;
-        } = false;
+        public static bool Active { get; set; } = false;
 
         internal static void LogMessage(string msg)
         {
             if (!Active)
+            {
                 return;
+            }
 
             try
             {
-                File.AppendAllText(MessageLogLocation, msg + Environment.NewLine);
+                File.AppendAllText(
+                    MessageLogLocation, 
+                    msg + Environment.NewLine);
             }
             catch (IOException)
             {
-                Console.WriteLine("Could Not Log To File");
+                Console.WriteLine("Could not log to file");
                 //Supress Exception
             }
         }

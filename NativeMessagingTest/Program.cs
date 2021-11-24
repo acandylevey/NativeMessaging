@@ -1,14 +1,19 @@
-using NativeMessaging;
-using System.Linq;
+﻿using NativeMessaging;
 
 namespace NativeMessagingTest
 {
     class Program
     {
-        static Host Host;
+        static Host Host = null!;
 
-        readonly static string[] AllowedOrigins = new string[] { "chrome-extension://knldjmfmopnpolahpmmgbagdohdnhkik/" };
-        readonly static string Description = "Alexander Candy-Levey Native Messaging Example Host";
+        readonly static string[] AllowedOrigins 
+            = new string[] 
+            { 
+                "chrome-extension://knldjmfmopnpolahpmmgbagdohdnhkik/" 
+            };
+
+        readonly static string Description 
+            = "Alexander Candy-Levey Native Messaging Example Host";
 
         static void Main(string[] args)
         {

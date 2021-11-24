@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace NativeMessaging
@@ -33,7 +30,11 @@ namespace NativeMessaging
             SupportedBrowsers = new List<ChromiumBrowser>(2);
 
             SendConfirmationReceipt = sendConfirmationReceipt;
-            ManifestPath = Path.Combine(Utils.AssemblyLoadDirectory(), Hostname + "-manifest.json");
+
+            ManifestPath 
+                = Path.Combine(
+                    Utils.AssemblyLoadDirectory() ?? "", 
+                    Hostname + "-manifest.json");
         }
 
         /// <summary>
@@ -42,20 +43,27 @@ namespace NativeMessaging
         public void Listen()
         {
             if (!IsRegistered())
+            {
                 throw new NotRegisteredWithBrowserException(Hostname);
+            }
+                
+            JObject? data;
 
-            JObject data;
             while ((data = Read()) != null)
             {
-                Log.LogMessage("Data Received:" + JsonConvert.SerializeObject(data));
+                Log.LogMessage(
+                    "Data Received:" + JsonConvert.SerializeObject(data));
 
                 if (SendConfirmationReceipt)
-                    SendMessage(new ResponseConfirmation(data).GetJObject());
+                {
+                    SendMessage(new ResponseConfirmation(data).GetJObject()!);
+                }
+
                 ProcessReceivedMessage(data);
             }
         }
 
-        private JObject Read()
+        private JObject? Read()
         {
             Log.LogMessage("Waiting for Data");
 
@@ -68,7 +76,9 @@ namespace NativeMessaging
 
             using (StreamReader reader = new StreamReader(stdin))
                 if (reader.Peek() >= 0)
+                {
                     reader.Read(buffer, 0, buffer.Length);
+                } 
 
             return JsonConvert.DeserializeObject<JObject>(new string(buffer));
         }
@@ -83,6 +93,7 @@ namespace NativeMessaging
 
             byte[] bytes = System.Text.Encoding.UTF8.GetBytes(data.ToString(Formatting.None));
             Stream stdout = Console.OpenStandardOutput();
+
             stdout.WriteByte((byte)((bytes.Length >> 0) & 0xFF));
             stdout.WriteByte((byte)((bytes.Length >> 8) & 0xFF));
             stdout.WriteByte((byte)((bytes.Length >> 16) & 0xFF));
@@ -104,7 +115,10 @@ namespace NativeMessaging
         /// <param name="description">Short application description to be included in the manifest.</param>
         /// <param name="allowedOrigins">List of extensions that should have access to the native messaging host.<br />Wildcards such as <code>chrome-extension://*/*</code> are not allowed.</param>
         /// <param name="overwrite">Determines if the manifest should be overwritten if it already exists.<br />Defaults to <see langword="false"/>.</param>
-        public void GenerateManifest(string description, string[] allowedOrigins, bool overwrite = false)
+        public void GenerateManifest(
+            string description,
+            string[] allowedOrigins,
+            bool overwrite = false)
         {
             if (File.Exists(ManifestPath) && !overwrite)
             {
@@ -114,7 +128,13 @@ namespace NativeMessaging
             {
                 Log.LogMessage("Generating Manifest");
 
-                string manifest = JsonConvert.SerializeObject(new Manifest(Hostname, description, Utils.AssemblyExecuteablePath(), allowedOrigins));
+                string manifest = JsonConvert.SerializeObject(
+                    new Manifest(
+                        Hostname, 
+                        description, 
+                        Utils.AssemblyExecuteablePath(), 
+                        allowedOrigins));
+
                 File.WriteAllText(ManifestPath, manifest);
 
                 Log.LogMessage("Manifest Generated");
