@@ -9,6 +9,7 @@ namespace NativeMessaging
     public abstract class Host
     {
         private readonly bool SendConfirmationReceipt;
+        private readonly bool CheckIsRegistered;
         private readonly string ManifestPath;
 
         /// <summary>
@@ -25,11 +26,13 @@ namespace NativeMessaging
         /// Creates the Host object
         /// </summary>
         /// <param name="sendConfirmationReceipt"><see langword="true" /> for the host to automatically send message confirmation receipt.</param>
-        public Host(bool sendConfirmationReceipt = true)
+        /// /// <param name="checkIsRegistered"><see langword="true" /> for the host to check if it is registered before listening.</param>
+        public Host(bool sendConfirmationReceipt = true, bool checkIsRegistered = true)
         {
             SupportedBrowsers = new List<ChromiumBrowser>(2);
 
             SendConfirmationReceipt = sendConfirmationReceipt;
+            CheckIsRegistered = checkIsRegistered;
 
             ManifestPath 
                 = Path.Combine(
@@ -42,7 +45,7 @@ namespace NativeMessaging
         /// </summary>
         public void Listen()
         {
-            if (!IsRegistered())
+            if (CheckIsRegistered && !IsRegistered())
             {
                 throw new NotRegisteredWithBrowserException(Hostname);
             }
@@ -155,7 +158,7 @@ namespace NativeMessaging
 
         #region Browser Registration
         /// <summary>
-        /// Checks if the host is registered with all required browsers.
+        /// Checks if the host is registered with any of the supported browsers.
         /// </summary>
         /// <returns><see langword="true"/> if the required information is present in the registry.</returns>
         public bool IsRegistered()
